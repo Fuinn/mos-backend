@@ -1,0 +1,2792 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/model/:
+    get:
+      summary: List models
+      description: Returns list of models and attributes
+      operationId: listModels
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      summary: Create model
+      description: Add model to the model list
+      operationId: createModel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                system:
+                  enum:
+                  - optmod
+                  - jump
+                  - cvxpy
+                  - gams
+                status:
+                  enum:
+                  - created
+                  - running
+                  - success
+                  - unknown
+                  - error
+                source:
+                  type: string
+                time_created:
+                  type: string
+                  format: date-time
+                time_start:
+                  type: string
+                  format: date-time
+                  nullable: true
+                time_end:
+                  type: string
+                  format: date-time
+                  nullable: true
+                execution_log:
+                  type: string
+              required:
+              - system
+              - time_created
+      responses:
+        '200':
+          description: ''
+  /api/model/{id}/:
+    get:
+      summary: Retrieve model
+      description: Retrieve specific model instance, identified by ID number
+      operationId: retrieveModel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  owner:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  system:
+                    enum:
+                    - optmod
+                    - jump
+                    - cvxpy
+                    - gams
+                  status:
+                    enum:
+                    - created
+                    - running
+                    - success
+                    - unknown
+                    - error
+                  source:
+                    type: string
+                  time_created:
+                    type: string
+                    format: date-time
+                  time_start:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  time_end:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  execution_log:
+                    type: string
+                  helper_objects:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - pre
+                          - post
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  interface_objects:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - input
+                          - output
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  interface_files:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        filename:
+                          type: string
+                          maxLength: 100
+                        type:
+                          enum:
+                          - input
+                          - output
+                        extension:
+                          type: string
+                          maxLength: 100
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  variables:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  functions:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        objective:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  constraints:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - array3d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  problem:
+                    properties:
+                      url:
+                        type: string
+                        readOnly: true
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 100
+                      model:
+                        type: string
+                        readOnly: true
+                      state:
+                        type: string
+                        readOnly: true
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  solver:
+                    properties:
+                      url:
+                        type: string
+                        readOnly: true
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 100
+                      model:
+                        type: string
+                        readOnly: true
+                      state:
+                        type: string
+                        readOnly: true
+                    type: object
+                    readOnly: true
+                required:
+                - system
+                - time_created
+          description: ''
+    put:
+      summary: Update model
+      description: Updates model and returns updated model instance
+      operationId: updateModel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                system:
+                  enum:
+                  - optmod
+                  - jump
+                  - cvxpy
+                  - gams
+                status:
+                  enum:
+                  - created
+                  - running
+                  - success
+                  - unknown
+                  - error
+                source:
+                  type: string
+                time_created:
+                  type: string
+                  format: date-time
+                time_start:
+                  type: string
+                  format: date-time
+                  nullable: true
+                time_end:
+                  type: string
+                  format: date-time
+                  nullable: true
+                execution_log:
+                  type: string
+              required:
+              - system
+              - time_created
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: Deletes a model instance
+      description: Deletes a model instance, identified by id
+      operationId: destroyModel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/model/{id}/get_status/:
+    get:
+      summary: Get model status
+      description: Get model status
+      operationId: get_statusModel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+                enum:
+                - created
+                - running
+                - success
+                - unknown
+                - error
+          description: ''
+  /api/model/{id}/write/:
+    get:
+      summary: Get model recipe
+      description: Returns recipe for model identified by id
+      operationId: writeModel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: ''
+  /api/model/{id}/set_status/:
+    put:
+      operationId: set_statusModel
+      summary: Set Model status
+      description: Set status of Model {id}, updated model metadata returned
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: ''
+  /api/model/create_from_file/:
+    post:
+      operationId: create_from_fileModel
+      summary: Create Model from file
+      description: Posts filepath of model file, returns MOS model object created from file    
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                source_file:
+                  type: string
+              required:
+              - source_file
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  owner:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  system:
+                    enum:
+                    - optmod
+                    - jump
+                    - cvxpy
+                    - gams
+                  status:
+                    enum:
+                    - created
+                    - running
+                    - success
+                    - unknown
+                    - error
+                  source:
+                    type: string
+                  time_created:
+                    type: string
+                    format: date-time
+                  time_start:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  time_end:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  execution_log:
+                    type: string
+                  helper_objects:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - pre
+                          - post
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  interface_objects:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - input
+                          - output
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  interface_files:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        filename:
+                          type: string
+                          maxLength: 100
+                        type:
+                          enum:
+                          - input
+                          - output
+                        extension:
+                          type: string
+                          maxLength: 100
+                        data:
+                          type: string
+                          readOnly: true
+                        data_size:
+                          type: integer
+                          maximum: 2147483647
+                          minimum: -2147483648
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                      - type
+                    readOnly: true
+                  variables:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  functions:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        objective:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - hashmap
+                          - unknown
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  constraints:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 100
+                        description:
+                          type: string
+                        type:
+                          enum:
+                          - scalar
+                          - array1d
+                          - array2d
+                          - array3d
+                          - hashmap
+                          - unknown
+                        size:
+                          type: string
+                          maxLength: 100
+                        has_states:
+                          type: boolean
+                        states:
+                          type: string
+                          readOnly: true
+                        model:
+                          type: string
+                          readOnly: true
+                      required:
+                      - name
+                    readOnly: true
+                  problem:
+                    properties:
+                      url:
+                        type: string
+                        readOnly: true
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 100
+                      model:
+                        type: string
+                        readOnly: true
+                      state:
+                        type: string
+                        readOnly: true
+                    required:
+                    - name
+                    type: object
+                    readOnly: true
+                  solver:
+                    properties:
+                      url:
+                        type: string
+                        readOnly: true
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 100
+                      model:
+                        type: string
+                        readOnly: true
+                      state:
+                        type: string
+                        readOnly: true
+                    type: object
+                    readOnly: true
+                required:
+                - system
+                - time_created
+          description: ''
+  /api/model/{id}/delete_results/:
+    post:
+      operationId: delete_resultsModel
+      summary: Delete Model results
+      description: Delete data associated with Model {id} results
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+  /api/model/{id}/run/:
+    post:
+      operationId: runModel
+      summary: Run Model
+      description: Run Model {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+  /api/model/{id}/set_execution_log/:
+    put:
+      operationId: set_execution_logModel
+      summary: Set execution log
+      description: Set execution log for Model {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: ''
+  /api/interface-file/:
+    get:
+      summary: List interface files
+      description: Returns list of interface files with metadata for each
+      operationId: listInterfaceFiles
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      summary: Create new interface file
+      description: Returns updated list of interface files
+      operationId: createInterfaceFile
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                filename:
+                  type: string
+                  maxLength: 100
+                type:
+                  enum:
+                  - input
+                  - output
+                extension:
+                  type: string
+                  maxLength: 100
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+  /api/interface-file/{id}/:
+    get:
+      summary: Retrieve Interface File
+      description: Get the metadata associated with file {id}
+      operationId: retrieveInterfaceFile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  filename:
+                    type: string
+                    maxLength: 100
+                  type:
+                    enum:
+                    - input
+                    - output
+                  extension:
+                    type: string
+                    maxLength: 100
+                  data:
+                    type: string
+                    readOnly: true
+                  data_size:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+                - type
+          description: ''
+    put:
+      operationId: updateInterfaceFile
+      summary: Update interface file
+      description: Update file {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                filename:
+                  type: string
+                  maxLength: 100
+                type:
+                  enum:
+                  - input
+                  - output
+                extension:
+                  type: string
+                  maxLength: 100
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyInterfaceFile
+      summary: Delete interface file
+      description: Deletes interface file {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/interface-file/{id}/data/:
+    get:
+      operationId: dataInterfaceFile
+      summary: Get Interface File data
+      description: Returns data contained in Interface File {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: ''
+  /api/interface-file/{id}/url/:
+    get:
+      operationId: urlInterfaceFile
+      summary: Get URL of interface file
+      description: Returns URL of file {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: ''
+  /api/interface-object/:
+    get:
+      operationId: listInterfaceObjects
+      summary: List Interface Objects
+      description: Lists interface objects and their properties
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createInterfaceObject
+      summary: Create new interface object
+      description: Adds new interface object, returns updated list of interface objects
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - input
+                  - output
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+  /api/interface-object/{id}/:
+    get:
+      operationId: retrieveInterfaceObject
+      summary: Retrieve Interface Object
+      description: Get Interface Object {id} and associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this interface object.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  type:
+                    enum:
+                    - input
+                    - output
+                  data:
+                    type: string
+                    readOnly: true
+                  data_size:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+                - type
+          description: ''
+    put:
+      operationId: updateInterfaceObject
+      summary: Update Interface Object 
+      description: Returns updated Interface Object {id} data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this interface object.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - input
+                  - output
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyInterfaceObject
+      summary: Delete Interface Object 
+      description: Deletes interface object {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this interface object.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/interface-object/{id}/data/:
+    get:
+      operationId: dataInterfaceObject
+      summary: Retrieve data associated with a specific Interface Object
+      description: Return Interface Object {id} data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this interface object.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+          description: ''
+  /api/helper-object/:
+    get:
+      operationId: listHelperObjects
+      summary: List Helper Objects
+      description: Lists Helper Objects and their properties
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createHelperObject
+      summary: Create new helper object
+      description: Adds new helper object, returns updated list of helper objects
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - pre
+                  - post
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+  /api/helper-object/{id}/:
+    get:
+      operationId: retrieveHelperObject
+      summary: Retrieve Helper Object
+      description: Get Helper Object {id} and associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this helper object.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  type:
+                    enum:
+                    - pre
+                    - post
+                  data:
+                    type: string
+                    readOnly: true
+                  data_size:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+                - type
+          description: ''
+    put:
+      operationId: updateHelperObject
+      summary: Update Helper Object 
+      description: Returns updated Helper Object {id} data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this helper object.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - pre
+                  - post
+                data_size:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+              required:
+              - name
+              - type
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyHelperObject
+      summary: Delete Helper Object 
+      description: Deletes Helper Object {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this helper object.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/helper-object/{id}/data/:
+    get:
+      operationId: dataHelperObject
+      summary: Retrieve data associated with a specific Helper Object
+      description: Return Helper Object {id} data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this helper object.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+          description: ''
+  /api/variable/:
+    get:
+      operationId: listVariables
+      summary: List Variables
+      description: Lists all Variables and their properties
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createVariable
+      summary: Create new variable
+      description: Adds new variable, returns updated list of variables
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+  /api/variable/{id}/:
+    get:
+      operationId: retrieveVariable
+      summary: Retrieve Variable
+      description: Get Variable {id} and associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this variable.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  type:
+                    enum:
+                    - scalar
+                    - array1d
+                    - array2d
+                    - hashmap
+                    - unknown
+                  size:
+                    type: string
+                    maxLength: 100
+                  has_states:
+                    type: boolean
+                  states:
+                    type: string
+                    readOnly: true
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateVariable
+      summary: Update Variable 
+      description: Updates Variable, returns updated Variable {id} metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this variable.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyVariable
+      summary: Delete Variable
+      description: Deletes Variable {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this variable.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/variable-state/:
+    get:
+      operationId: listVariableStates
+      summary: List Variable States
+      description: Returns a list of all Variable States
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createVariableState
+      summary: Create new Variable State
+      description: Creates new Variable State, returns updated list
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - continuous
+                  - integer
+                  - binary
+                  - unknown
+                value:
+                  type: number
+                upper_bound:
+                  type: number
+                lower_bound:
+                  type: number
+                variable:
+                  type: string
+              required:
+              - variable
+      responses:
+        '200':
+          description: ''
+  /api/variable-state/{id}/:
+    get:
+      operationId: retrieveVariableState
+      summary: Retrieve a Variable State
+      description: Retrieves a specific Variable State 
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 200
+                  kind:
+                    enum:
+                    - continuous
+                    - integer
+                    - binary
+                    - unknown
+                  value:
+                    type: number
+                  upper_bound:
+                    type: number
+                  lower_bound:
+                    type: number
+                  variable:
+                    type: string
+                required:
+                - variable
+          description: ''
+    put:
+      operationId: updateVariableState
+      summary: Update Variable State
+      description: Updates a specific Variable State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - continuous
+                  - integer
+                  - binary
+                  - unknown
+                value:
+                  type: number
+                upper_bound:
+                  type: number
+                lower_bound:
+                  type: number
+                variable:
+                  type: string
+              required:
+              - variable
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyVariableState
+      summary: Delete Variable State
+      description: Deletes a specific Variable State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/variable-state/bulk_create/:
+    post:
+      operationId: bulk_createVariableState
+      summary: Bulk create Variable States
+      description: Add multiple Variable States with single call.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - continuous
+                  - integer
+                  - binary
+                  - unknown
+                value:
+                  type: number
+                upper_bound:
+                  type: number
+                lower_bound:
+                  type: number
+                variable:
+                  type: string
+              required:
+              - variable
+      responses:
+        '200':
+          description: ''
+  /api/function/:
+    get:
+      operationId: listFunctions
+      summary: List all Functions
+      description: Returns a list of all Functions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createFunction
+      summary: Create Function
+      description: Creates a new Function, returns updated list
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+                objective:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+  /api/function/{id}/:
+    get:
+      operationId: retrieveFunction
+      summary: Retrieve a specific Function
+      description: Retrieve a specific Function and associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this function.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  type:
+                    enum:
+                    - scalar
+                    - array1d
+                    - array2d
+                    - hashmap
+                    - unknown
+                  size:
+                    type: string
+                    maxLength: 100
+                  has_states:
+                    type: boolean
+                  objective:
+                    enum:
+                    - scalar
+                    - array1d
+                    - array2d
+                    - hashmap
+                    - unknown
+                  states:
+                    type: string
+                    readOnly: true
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateFunction
+      summary: Update a specific Function
+      description: Updates a specific Function, and returns updated associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this function.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+                objective:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - hashmap
+                  - unknown
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyFunction
+      summary: Delete a specific Function
+      description: Deletes Function {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this function.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/function-state/:
+    get:
+      operationId: listFunctionStates
+      summary: List all Function States
+      description: Returns a list of all Function States
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createFunctionState
+      summary: Create Function State
+      description: Create a new Function State, and returns an updated list of Function States
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                value:
+                  type: number
+                function:
+                  type: string
+              required:
+              - function
+      responses:
+        '200':
+          description: ''
+  /api/function-state/{id}/:
+    get:
+      operationId: retrieveFunctionState
+      summary: Retrieve a specific Function State
+      description: Returns metadata associated with Function State {id}     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 200
+                  value:
+                    type: number
+                  function:
+                    type: string
+                required:
+                - function
+          description: ''
+    put:
+      operationId: updateFunctionState
+      summary: Update Function State
+      description: Updates a specific Function State, returns updated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                value:
+                  type: number
+                function:
+                  type: string
+              required:
+              - function
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyFunctionState
+      summary: Delete Function State
+      description: Delete a specific Function State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/function-state/bulk_create/:
+    post:
+      operationId: bulk_createFunctionState
+      summary: Bulk create Function States
+      description: Create multiple Function States with single call
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                value:
+                  type: number
+                function:
+                  type: string
+              required:
+              - function
+      responses:
+        '200':
+          description: ''
+  /api/constraint/:
+    get:
+      operationId: listConstraints
+      summary: List Constraints
+      description: Returns list of all Constraints   
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createConstraint
+      summary: Crate Constraint
+      description: Creates new Constraint, returns updated list of all Constraints
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - array3d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+  /api/constraint/{id}/:
+    get:
+      operationId: retrieveConstraint
+      summary: Retrieve Constraint
+      description: Returns metadata associated with specific Constraint     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this constraint.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  description:
+                    type: string
+                  type:
+                    enum:
+                    - scalar
+                    - array1d
+                    - array2d
+                    - array3d
+                    - hashmap
+                    - unknown
+                  size:
+                    type: string
+                    maxLength: 100
+                  has_states:
+                    type: boolean
+                  states:
+                    type: string
+                    readOnly: true
+                  model:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateConstraint
+      summary: Update Constraint
+      description: Updates a specific Constraint     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this constraint.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                description:
+                  type: string
+                type:
+                  enum:
+                  - scalar
+                  - array1d
+                  - array2d
+                  - array3d
+                  - hashmap
+                  - unknown
+                size:
+                  type: string
+                  maxLength: 100
+                has_states:
+                  type: boolean
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyConstraint
+      summary: Delete Constraint
+      description: Deletes a specific Constraint
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this constraint.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/constraint-state/:
+    get:
+      operationId: listConstraintStates
+      summary: List Constraint States
+      description: Returns a list of all Constraint States
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createConstraintState
+      summary: Create Constraint State
+      description: Creates new Constraint State, returns updated list of all Constraint States     
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - equality
+                  - inequality
+                  - unknown
+                dual:
+                  type: number
+                violation:
+                  type: number
+                constraint:
+                  type: string
+              required:
+              - kind
+              - constraint
+      responses:
+        '200':
+          description: ''
+  /api/constraint-state/{id}/:
+    get:
+      operationId: retrieveConstraintState
+      summary: Retrieve Constraint State
+      description: Returns metadata associated with specific Constraint State     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 200
+                  kind:
+                    enum:
+                    - equality
+                    - inequality
+                    - unknown
+                  dual:
+                    type: number
+                  violation:
+                    type: number
+                  constraint:
+                    type: string
+                required:
+                - kind
+                - constraint
+          description: ''
+    put:
+      operationId: updateConstraintState
+      summary: Update Constraint State
+      description: Updates specific Constraint State, returns associated updated metadata     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - equality
+                  - inequality
+                  - unknown
+                dual:
+                  type: number
+                violation:
+                  type: number
+                constraint:
+                  type: string
+              required:
+              - kind
+              - constraint
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyConstraintState
+      summary: Delete Constraint State
+      description: Delete specific Constraint State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/constraint-state/bulk_create/:
+    post:
+      operationId: bulk_createConstraintState
+      summary: Bulk create Constraint States
+      description: Add multiple Constraint States with a single call
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                kind:
+                  enum:
+                  - equality
+                  - inequality
+                  - unknown
+                dual:
+                  type: number
+                violation:
+                  type: number
+                constraint:
+                  type: string
+              required:
+              - kind
+              - constraint
+      responses:
+        '200':
+          description: ''
+  /api/problem/:
+    get:
+      operationId: listProblems
+      summary: List Problems
+      description: Returns a list of all problems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createProblem
+      summary: Create Problem
+      description: Creates new problem, returns updatd list of all Problems
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+  /api/problem/{id}/:
+    get:
+      operationId: retrieveProblem
+      summary: Retrieve Problem
+      description: Retrieve specific Problem and associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this problem.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  model:
+                    type: string
+                    readOnly: true
+                  state:
+                    type: string
+                    readOnly: true
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateProblem
+      summary: Update Problem
+      description: Update specific Problem and return updated list of associated metadata
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this problem.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+              required:
+              - name
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyProblem
+      summary: Delete Problem
+      description: Delete a specific Problem
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this problem.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/problem-state/:
+    get:
+      operationId: listProblemStates
+      summary: List Problem States
+      description: Returns a list of all Problem States
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createProblemState
+      summary: Create Problem State
+      description: Creates new Problem State, returns an updated list of all Problem States
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                kind:
+                  enum:
+                  - lp
+                  - nlp
+                  - milp
+                  - convex
+                  - mip
+                  - unknown
+                num_vars:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                num_constraints:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                problem:
+                  type: string
+              required:
+              - problem
+      responses:
+        '200':
+          description: ''
+  /api/problem-state/{id}/:
+    get:
+      operationId: retrieveProblemState
+      summary: Retrieve Problem State
+      description: Returns metadata associated with a specific Problem State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  kind:
+                    enum:
+                    - lp
+                    - nlp
+                    - milp
+                    - convex
+                    - mip
+                    - unknown
+                  num_vars:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  num_constraints:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  problem:
+                    type: string
+                required:
+                - problem
+          description: ''
+    put:
+      operationId: updateProblemState
+      summary: Update Problem State
+      description: Update specific Problem State      
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                kind:
+                  enum:
+                  - lp
+                  - nlp
+                  - milp
+                  - convex
+                  - mip
+                  - unknown
+                num_vars:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                num_constraints:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                problem:
+                  type: string
+              required:
+              - problem
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroyProblemState
+      summary: Delete Problem State
+      description: Delete specific Problem State
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/solver/:
+    get:
+      operationId: listSolvers
+      summary: List Solvers
+      description: Returns a list of all Solvers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createSolver
+      summary: Create Solver
+      description: Creates new Solver, returns updated list of Solvers      
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+      responses:
+        '200':
+          description: ''
+  /api/solver/{id}/:
+    get:
+      operationId: retrieveSolver
+      summary: Retrieve Solver
+      description: Retrieves metadata associated with a specific Solver     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this solver.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  model:
+                    type: string
+                    readOnly: true
+                  state:
+                    type: string
+                    readOnly: true
+          description: ''
+    put:
+      operationId: updateSolver
+      summary: Update Solver
+      description: Updates the metadata associated with a specific Solver     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this solver.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroySolver
+      summary: Delete Solver
+      description: Delete a specific Solver     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this solver.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/solver-state/:
+    get:
+      operationId: listSolverStates
+      summary: List Solver States
+      description: List all Solver States     
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: createSolverState
+      summary: Create Solver State
+      description: Create a new Solver State, returns updated list of Solver States     
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                status:
+                  type: string
+                  maxLength: 100
+                message:
+                  type: string
+                iterations:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                time:
+                  type: number
+                parameters:
+                  type: object
+                solver:
+                  type: string
+              required:
+              - status
+              - solver
+      responses:
+        '200':
+          description: ''
+  /api/solver-state/{id}/:
+    get:
+      operationId: retrieveSolverState
+      summary: Retrieve Solver State
+      description: Retrieve metadata associated with a specific Solver State     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  status:
+                    type: string
+                    maxLength: 100
+                  message:
+                    type: string
+                  iterations:
+                    type: integer
+                    maximum: 2147483647
+                    minimum: -2147483648
+                  time:
+                    type: number
+                  parameters:
+                    type: object
+                  solver:
+                    type: string
+                required:
+                - status
+                - solver
+          description: ''
+    put:
+      operationId: updateSolverState
+      summary: Update Solver State
+      description: Update metadata associated with a specific Solver State     
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                status:
+                  type: string
+                  maxLength: 100
+                message:
+                  type: string
+                iterations:
+                  type: integer
+                  maximum: 2147483647
+                  minimum: -2147483648
+                time:
+                  type: number
+                parameters:
+                  type: object
+                solver:
+                  type: string
+              required:
+              - status
+              - solver
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: destroySolverState
+      summary: Delete Solver State
+      description: Delete a specific Solver State      
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
