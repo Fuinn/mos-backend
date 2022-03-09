@@ -12,6 +12,9 @@ MOS backend server.
 
 ### Environment variables
 
+The following environment variables can be specified.
+They can be provided via a .env file.
+
 * MOS_BACKEND_DEBUG
 * MOS_BACKEND_HOST
 * MOS_BACKEND_PORT
