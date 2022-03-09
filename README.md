@@ -38,7 +38,7 @@ They can be provided via a .env file.
 
 Install Python dependencies with
 
-``sudo pip3 install -r requirements.txt``
+``sudo pip install -r requirements.txt``
 
 ## Local Deployment
 
