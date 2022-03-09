@@ -58,3 +58,7 @@ The following endpoints are then available and accessible:
 ## Dockerized Deployment
 
 Coming soon.
+
+## Citation
+
+If MOS is useful for research purposes, [the MOS overview paper](https://fuinn.ie/mos.pdf) may be cited.
