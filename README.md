@@ -12,6 +12,9 @@ MOS backend server.
 
 ### Environment variables
 
+The following environment variables can be specified.
+They can be provided via a .env file.
+
 * MOS_BACKEND_DEBUG
 * MOS_BACKEND_HOST
 * MOS_BACKEND_PORT
@@ -35,7 +38,7 @@ MOS backend server.
 
 Install Python dependencies with
 
-``sudo pip3 install -r requirements.txt``
+``sudo pip install -r requirements.txt``
 
 ## Local Deployment
 
@@ -55,3 +58,7 @@ The following endpoints are then available and accessible:
 ## Dockerized Deployment
 
 Coming soon.
+
+## Citation
+
+If MOS is useful for research purposes, [the MOS overview paper](https://fuinn.ie/mos.pdf) may be cited.
