@@ -54,4 +54,6 @@ The following endpoints are then available and accessible:
 
 ## Dockerized Deployment
 
-Coming soon.
+* ``./scripts/docker_build.sh``: Build MOS Backend image.
+* ``./scripts/docker_run.sh``: Runs MOS Backend container.
+* ``./scripts/docker_createsuperuser.sh``: Creates super user (containers needs to be running).
