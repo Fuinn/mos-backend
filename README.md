@@ -34,13 +34,11 @@ They can be provided via a .env file.
 * MOS_RABBIT_PWD
 * MOS_RABBIT_HOST
 
-### Python dependencies
+## Local Deployment
 
 Install Python dependencies with
 
 ``sudo pip install -r requirements.txt``
-
-## Local Deployment
 
 Run the MOS backend using 
 
@@ -59,7 +57,7 @@ The following endpoints are then available and accessible:
 
 * ``./scripts/docker_build.sh``: Builds MOS Backend image.
 * ``./scripts/docker_run.sh``: Runs MOS Backend container.
-* ``./scripts/docker_createsuperuser.sh``: Creates super user (container needs to be running).
+* ``./scripts/docker_createsuperuser.sh``: Creates admin user (container needs to be running).
 
 The following endpoints are then available and accessible:
 
