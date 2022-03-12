@@ -61,6 +61,11 @@ The following endpoints are then available and accessible:
 * ``./scripts/docker_run.sh``: Runs MOS Backend container.
 * ``./scripts/docker_createsuperuser.sh``: Creates super user (container needs to be running).
 
+The following endpoints are then available and accessible:
+
+* REST api: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/api``
+* admin site: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/admin``
+
 ## Citation
 
 If MOS is useful for research purposes, [the MOS overview paper](https://fuinn.ie/mos.pdf) may be cited.
