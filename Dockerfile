@@ -11,9 +11,9 @@ RUN pip3 install --upgrade pip
 ADD ./requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
 
-# Optdev-backend
+# MOS backend files
 ADD . /mos-backend
 
-# CMD
+# Entrypoint
 WORKDIR /mos-backend
 ENTRYPOINT ["./manage.py", "run_mos_backend"]
