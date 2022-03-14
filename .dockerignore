@@ -1,0 +1,7 @@
+.git
+*.egg-info
+dist/
+build/
+*/media/
+*/static/
+
