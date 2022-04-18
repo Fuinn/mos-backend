@@ -12,4 +12,5 @@ class Command(BaseCommand):
         location = '%s:%s' %(host, port)
         execute_from_command_line(['', 'migrate', '--noinput'])
         execute_from_command_line(['', 'collectstatic', '--noinput'])
+        execute_from_command_line(['', 'init_mos_admin'])
         execute_from_command_line(['', 'runserver', location, '--insecure'])
