@@ -13,7 +13,7 @@ if 'MOS_BACKEND_DEBUG' in os.environ:
     elif debug != '0':
         raise ValueError('MOS_BACKEND_DEBUG should be 0 or 1 when provided')
 
-ALLOWED_HOSTS = [os.getenv('MOS_BACKEND_HOST', 'localhost')]
+ALLOWED_HOSTS = ['localhost', os.getenv('MOS_BACKEND_HOST', 'localhost')]
 
 CORS_ORIGIN_WHITELIST = [
     'http://{host}:{port}'.format(host=os.getenv('MOS_FRONTEND_HOST', 'localhost'),

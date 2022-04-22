@@ -1,15 +1,13 @@
-FROM ubuntu:18.04
+FROM python:3
 
 LABEL "app.name"="MOS Backend"
 
-# Python
-RUN apt-get update
-RUN apt-get install -y python3-pip
-RUN pip3 install --upgrade pip
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Python dependencies
 ADD ./requirements.txt /requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 # MOS backend files
 ADD . /mos-backend
