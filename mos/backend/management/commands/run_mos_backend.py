@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
         host = os.getenv('MOS_BACKEND_HOST', 'localhost')
         port = os.getenv('MOS_BACKEND_PORT', 8000)
-        location = '%s:%s' %(host, port)
+        location = '%s:%s' %('0.0.0.0', port)
         execute_from_command_line(['', 'migrate', '--noinput'])
         execute_from_command_line(['', 'collectstatic', '--noinput'])
         execute_from_command_line(['', 'init_mos_admin'])
