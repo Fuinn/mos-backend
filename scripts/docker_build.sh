@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker build -t mos-backend -f ./Dockerfile .
+sudo docker build -t tomastinoco/mos-backend .
