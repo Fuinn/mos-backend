@@ -49,25 +49,19 @@ Run the MOS backend using
 
 ``./manage.py run_mos_backend``
 
-Create an admin user with
-
-``./manage.py createsuperuser``
-
-The following endpoints are then available and accessible:
+The following endpoints are then available:
 
 * REST api: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/api``
 * admin site: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/admin``
 
 ## Dockerized Deployment
 
-* ``./scripts/docker_build.sh``: Builds MOS Backend image.
-* ``./scripts/docker_run.sh``: Runs MOS Backend container.
-* ``./scripts/docker_createsuperuser.sh``: Creates admin user (container needs to be running).
+The following scripts are available for building the image, running the container, connecting to the container, and for pushing the image to Docker Hub:
 
-The following endpoints are then available and accessible:
-
-* REST api: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/api``
-* admin site: ``MOS_BACKEND_HOST:MOS_BACKEND_PORT/admin``
+* ``./scripts/docker_build.sh``
+* ``./scripts/docker_run.sh``
+* ``./scripts/docker_connect.sh``
+* ``./scripts/docker_push.sh``
 
 ## Citation
 
