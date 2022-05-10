@@ -4,5 +4,5 @@ sudo docker run -it \
                 --network=host \
                 -v mos-backend-media:/mos-backend/service/media \
                 --env-file=.env \
-                --name=mos-backend \
-                tomastinoco/mos-backend
+                --name=mos-demo-backend \
+                tomastinoco/mos-demo-backend
